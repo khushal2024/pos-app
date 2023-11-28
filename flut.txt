@@ -1,0 +1,294 @@
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
+// ignore: must_be_immutable
+class UserProfile extends StatefulWidget {
+  final String name;
+  final String email;
+  String profileImage;
+
+  UserProfile({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.profileImage,
+  });
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _UserProfileState createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+  File? _image;
+
+  Future<void> _pickImage(ImageSource source) async {
+    final imagePicker = ImagePicker();
+    // ignore: deprecated_member_use
+    final pickedImage = await imagePicker.getImage(source: source);
+
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+        widget.profileImage = pickedImage.path;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _image = widget.profileImage.isNotEmpty ? File(widget.profileImage) : null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('User Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        leading: Icon(Icons.photo_camera),
+                        title: Text('Take a photo'),
+                        onTap: () {
+                          _pickImage(ImageSource.camera);
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.photo_library),
+                        title: Text('Choose from gallery'),
+                        onTap: () {
+                          _pickImage(ImageSource.gallery);
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 64.0,
+                backgroundImage: AssetImage('assets\images\IMG-20220331-WA0037.jpg'),
+                //  backgroundImage: 
+                //_image != null
+                //     ? FileImage(_image!)
+                //     : AssetImage(widget.profileImage),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Name: ${widget.name}',
+              style: TextStyle(fontSize: 20.0),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              'Email: ${widget.email}',
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ child: ListView(
+          children: [
+            ListTile(
+              title: Text('Menu Item 1'),
+              onTap: () {
+                // Handle menu item 1 tap
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: Text('Menu Item 2'),
+              onTap: () {
+                // Handle menu item 2 tap
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: Text('Menu Item 3'),
+              onTap: () {
+                // Handle menu item 3 tap
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+          ],
+        ),
+
+FirebaseFirestore.instance.collection('users').add({
+      'name': name,
+    });
+
+
+import 'package:flutter/material.dart';
+import 'package:my_app/adminReg.dart';
+import 'login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Registration Form',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: RegistrationPage(),
+    );
+  }
+}
+
+class RegistrationPage extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Registration Form'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: 'Name',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: passwordController,
+              decoration: InputDecoration(
+                labelText: 'Password',
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Perform registration
+                String name = nameController.text;
+                String email = emailController.text;
+                String password = passwordController.text;
+
+
+
+
+                
+
+
+
+
+
+
+
+
+
+                // final DatabaseReference _database =
+                //     FirebaseDatabase.instance.reference();
+
+                // Future<void> registerUser(
+                //     String name, String email, String password) async {
+                //   try {
+                //     await _database.child('users').push().set({
+                //       'name': name,
+                //       'email': email,
+                //       'password': password,
+                //     });
+                //     print('User registered successfully!');
+                //   } catch (e) {
+                //     print('Error registering user: $e');
+                //   }
+                // }
+
+                // Add your registration logic here
+
+                // Print the entered data for testing
+
+                // print('Name: $name');
+                // print('Email: $email');
+                // print('Password: $password');
+              },
+              child: Text('Register'),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Perform registration
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+              child: Text('Login'),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Perform registration
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => adminReg()),
+                );
+              },
+              child: Text('Admin Registration'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+

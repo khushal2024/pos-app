@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+
+
+    void main() => runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: Colors.lightBlue[800],
+          hintColor: Colors.cyan[600],
+        ),
+      )
+    );
+    class MyApp extends StatefulWidget{
+  const MyApp({super.key});
+
+
+      @override
+        // ignore: library_private_types_in_public_api
+        _MyAppState createState() => _MyAppState();
+    }
+
+class _MyAppState extends State {
+
+      late String name, description;
+      late double price;
+
+      getName(name){
+        this.name = name;
+        // ignore: avoid_print
+        print(this.name);
+      }
+      getDescription(description){
+        this.description = description;
+        // ignore: avoid_print
+        print(this.description);
+      }
+      getPrice(price){
+        this.price = double.parse(price);
+        // ignore: avoid_print
+        print(this.price);
+      }
+
+      @override
+    Widget build(BuildContext context){
+        return Scaffold(
+            appBar: AppBar(
+              title: const Text("Testing App"),
+
+            ),
+          body: Padding(
+            padding:  const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TextField(decoration: const InputDecoration(
+                    hintText: "Name"
+                ),
+                onChanged: (String name){
+                  getName(name);
+                },
+                ),
+                TextField(decoration: const InputDecoration(
+                    hintText: "Description"
+                ),
+                  onChanged: (String description){
+                    getDescription(description);
+                  },
+                ),
+                TextField(decoration: const InputDecoration(
+                    hintText: "Price"
+                ),
+                  onChanged: (String price){
+                    getPrice(price);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+}
